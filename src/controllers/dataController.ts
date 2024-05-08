@@ -1,5 +1,16 @@
 import DataModel from "../models/data.model";
 
+export const homePage = async (req: any, res: any) => {
+  try {
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write(`<a href=\'${process.env.PROJECT_DEPLOYED_URL}\'>View project</a>`)
+    res.end();
+  } catch (err: any) {
+    console.error(err?.message);
+    throw new Error(err?.message);
+  }
+}
+
 export const getData = async (req: any, res: any) => {
   try {
     const { contentType } = req.params;
@@ -72,21 +83,6 @@ export const updateData = async (req: any, res: any): Promise<any> => {
       } else {
         res.status(404).json({ message: "Data not found!" });
       }
-    }
-  } catch (err: any) {
-    console.error(err?.message);
-    throw new Error(err?.message);
-  }
-};
-
-export const getAPICount = async (req: any, res: any): Promise<any> => {
-  try {
-    const { contentType } = req.params;
-
-    if (contentType) {
-      const response = await DataModel.find({ content_type: contentType });
-
-      res.status(200).json(response);
     }
   } catch (err: any) {
     console.error(err?.message);
